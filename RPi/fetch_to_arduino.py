@@ -12,14 +12,14 @@ db_config = {
     'database': ''
 }
 # 建立和Arduino的實體序列埠通訊
-ser = serial.Serial('COM3', 9600) # Windows 用COMX
-#ser = serial.Serial('/dev/ttyACM0', 9600) # Linux用/dev/ttyACMX
+#ser = serial.Serial('COM3', 9600) # Windows 用COMX
+ser = serial.Serial('/dev/ttyACM0', 9600) # Linux 用/dev/ttyACMX
 #############################################################
 # 每隔 fetch_interval 查詢一次指令(包含fetch_interval，可以在GCP的table : decision更改查詢指令的間隔)
 fetch_interval = 10
 
 while True:
-    ###### 與GCP VM DB 連線並取得投餌指令
+    ###### 與 GCP VM DB 連線並取得投餌指令
     try:
         connection = mysql.connector.connect(**db_config)
 
