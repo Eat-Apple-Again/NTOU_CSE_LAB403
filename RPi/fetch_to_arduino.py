@@ -58,13 +58,15 @@ while True:
     try:
         # 傳送訊息到Arduinn
         to_send = f"{mode}{angle}{period}{amount}{fetch_interval}"
-        ser.write((str(angle) + "\n").encode())
+        ser.write(to_send.encode())
 
         # 從Arduino接收資料
         arduino_response = ser.readline().decode().strip()
         print("Arduino回傳收到指令: ", arduino_response)
-        """
-        if arduino_response == angle:
+        """ R
+        print(to_send)
+        print(arduino_response)
+        if arduino_response.strip() == to_send.strip():
             print("Arduino正確接收: ", arduino_response)
         else:
             print("Arduino接收異常: ", arduino_response)
