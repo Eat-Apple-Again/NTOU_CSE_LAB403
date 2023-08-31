@@ -33,9 +33,11 @@ while True:
             result = cursor.fetchone()
 
             if result:
-                id, angle, stop, new_interval = result
-                print(f"投餌指令: ID: {id}, angle: {angle}, Stop: {stop}, fetch_interval: {new_interval}")
-                fetch_interval = new_interval
+                id, mode, angle, period, amount, fetch_interval = result
+                print(f"投餌指令: mode: {mode}, angle: {angle}, period: {period}, amount: {amount}, fetch_interval: {fetch_interval}")
+                #id = result
+                #print(id)
+                new_fetch_interval = fetch_interval
             else:
                 print("找不到指令")
 
@@ -55,6 +57,7 @@ while True:
     ##### 向Arduino傳遞投餌指令，並確認回傳值是否正確
     try:
         # 傳送訊息到Arduinn
+        to_send = f"{mode}{angle}{period}{amount}{fetch_interval}"
         ser.write((str(angle) + "\n").encode())
 
         # 從Arduino接收資料
@@ -71,7 +74,7 @@ while True:
     #####-------------------------------------------
 
     # set time interval
-    time.sleep(fetch_interval)
+    time.sleep(new_fetch_interval)
     print("***")
 # 關閉串列通訊物件
 ser.close()
