@@ -74,6 +74,7 @@ while True:
     #####-------------------------------------------
 
     # set time interval
+    new_fetch_interval = int(new_fetch_interval)
     time.sleep(new_fetch_interval)
     print("***")
 # 關閉串列通訊物件
