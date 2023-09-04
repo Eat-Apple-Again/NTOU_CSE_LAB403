@@ -18,7 +18,10 @@ pip3 install mysql-connector-python
 sudo apt-get install python3-pandas
 
 # Arduino
-sudo apt-get install Arduino
+sudo apt-get install arduino
 
 # schedule
 sudo apt-get ubustall python-schedule
+
+# chmod +x install_libraries.sh
+# yes | ./install_libraries.sh
