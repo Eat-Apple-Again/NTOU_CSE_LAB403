@@ -8,10 +8,10 @@ from PIL import Image
 
 # 連線MySQL資料庫
 fishDB = mysql.connector.connect(
-  host="104.199.166.105",
-  user="lab403",
-  password="66386638",
-  database="fishDB"
+  host="",
+  user="",
+  password="",
+  database=""
 )
 
 # 創建cursor物件
