@@ -45,7 +45,9 @@ while True:
             print("指令獲取成功")
 
     except mysql.connector.Error as err:
-        print("資料庫錯誤:", err)
+        # 若RPi和GCP的連線失敗，則船
+        id, mode, angle, period, amount, fetch_interval = 1, 2, 90, 180, 10, 5 
+        print("Database Connection FAILED-:", err)
 
     finally:
         if 'connection' in locals() and connection.is_connected():
