@@ -45,7 +45,7 @@ while True:
             print("指令獲取成功")
 
     except mysql.connector.Error as err:
-        # 若RPi和GCP的連線失敗，則船
+        # 若RPi和GCP的連線失敗，則傳遞備用指令給ESP32 (定時模式 3小時)
         id, mode, angle, period, amount, fetch_interval = 1, 2, 90, 180, 10, 5 
         print("Database Connection FAILED-:", err)
 
