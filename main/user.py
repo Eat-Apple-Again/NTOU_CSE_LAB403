@@ -4,9 +4,9 @@ import subprocess
 root = tk.Tk()
 
 def run_monitor():
-    subprocess.Popen(["python", "/home/pi/Desktop/main/monitor.py"])
+    subprocess.Popen(["python", "/home/pi/Desktop/NTOU_CSE_LAB403/main/monitor.py"])
 def run_inone():
-    subprocess.Popen(["python", "/home/pi/Desktop/main/upload.py"])
+    subprocess.Popen(["python", "/home/pi/Desktop/NTOU_CSE_LAB403/main/upload.py"])
 def stop_program():
     root.destroy()
 
