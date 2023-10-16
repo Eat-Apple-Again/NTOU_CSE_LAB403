@@ -45,7 +45,7 @@ def select_data(id):
 if __name__ == '__main__':
     #選擇攝影機
     #參考 https://www.ispyconnect.com/camera/d-link
-    cap1 = cv2.VideoCapture('rtsp://admin:1234@192.168.7.21/cam0/h264')
+    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
     cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
 
     i = 0
@@ -71,9 +71,9 @@ if __name__ == '__main__':
       if cv2.waitKey(1000) & 0xFF == ord('q'):
         break
       else:
-        cv2.imwrite("/home/pi/Desktop/main/upload_frames/upload.png", frame1)
+        cv2.imwrite("/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png", frame1)
         id = 1
-        image_path = '/home/pi/Desktop/main/upload_frames/upload.png'
+        image_path = '/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png'
         delete_data(id)
         # 新增資料
         insert_data(id, 'picture01', image_path)
