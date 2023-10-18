@@ -1,5 +1,5 @@
 void setup() {
-  Serial.begin(9600); // 設定串列通訊速率
+  Serial.begin(115200); // 設定串列通訊速率，電機系ESP32使用115200
 }
 
 void loop() {
