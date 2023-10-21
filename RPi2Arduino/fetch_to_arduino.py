@@ -13,7 +13,8 @@ db_config = {
 }
 # 建立和Arduino的實體序列埠通訊
 #ser = serial.Serial('COM3', 9600) # Windows 用COMX
-ser = serial.Serial('/dev/ttyACM0', 9600) # Linux 用/dev/ttyACMX
+#ser = serial.Serial('/dev/ttyACM0', 9600) # Linux 用/dev/ttyACMX
+ser = serial.Serial('/dev/ttyUSB0', 115200)
 #############################################################
 # 每隔 fetch_interval 查詢一次指令(包含fetch_interval，可以在GCP的table : decision更改查詢指令的間隔)
 fetch_interval = 10
