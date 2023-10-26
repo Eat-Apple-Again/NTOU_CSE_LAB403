@@ -6,6 +6,7 @@ from multiprocessing import Process, Queue
 from datetime import datetime
 import schedule
 import time
+import os
 
 def image_save(taskqueue, width, height, fps, frames_per_file):
 
@@ -27,14 +28,16 @@ def image_save(taskqueue, width, height, fps, frames_per_file):
 
             if writer: writer.release()
 
-            # 建立 VideoWriter 物件（以數字編號）
-            # index = int(frame_counter // frames_per_file)
-            # writer = cv2.VideoWriter(f'output-{index}.mp4', fourcc, fps, (width, height))
-
             # 建立 VideoWriter 物件（以時間命名）
             now = datetime.now()
+            date_folder = now.strftime("%Y%m%d")  # 以年月日格式建立資料夾名稱
+            if not os.path.exists(date_folder):
+                os.makedirs(date_folder)
+
             timestamp = now.strftime("%Y-%m-%d-%H-%M-%S")
-            writer = cv2.VideoWriter(f'output-{timestamp}.mp4', fourcc, fps, (width, height))
+            video_path = os.path.join(date_folder, f'output-{timestamp}.mp4')
+
+            writer = cv2.VideoWriter(video_path, fourcc, fps, (width, height))
 
         # 儲存影像
         writer.write(image)
@@ -44,7 +47,7 @@ def image_save(taskqueue, width, height, fps, frames_per_file):
 
 def rtsp_streaming():
         # 開啟 RTSP 串流
-    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
+    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.50.250/cam0/h264')
 
     # 取得影像的尺寸大小
     width = int(cap1.get(cv2.CAP_PROP_FRAME_WIDTH))
