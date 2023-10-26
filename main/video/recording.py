@@ -47,7 +47,7 @@ def image_save(taskqueue, width, height, fps, frames_per_file):
 
 def rtsp_streaming():
         # 開啟 RTSP 串流
-    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.50.250/cam0/h264')
+    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
 
     # 取得影像的尺寸大小
     width = int(cap1.get(cv2.CAP_PROP_FRAME_WIDTH))
