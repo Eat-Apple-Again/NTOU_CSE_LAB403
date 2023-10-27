@@ -19,8 +19,8 @@ def stop_program():
 
 button1 = tk.Button(root, text="查看本地監視器", command=run_monitor)
 button2 = tk.Button(root, text="上傳監視器影像", command=run_inone)
-button3 = tk.button(root, text="傳遞指令給ESP32", command=run_toESP32)
-button4 = tk.button(root, text="重設GCP VM DB的投餌指令", command=run_reset_command)
+button3 = tk.Button(root, text="傳遞指令給ESP32", command=run_toESP32)
+button4 = tk.Button(root, text="重設GCP VM DB的投餌指令", command=run_reset_command)
 button5 = tk.Button(root, text="開始錄製v1", command=run_recording)
 button6 = tk.Button(root, text="關閉", command=stop_program)
 
