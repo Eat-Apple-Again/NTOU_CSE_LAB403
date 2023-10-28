@@ -12,7 +12,7 @@ def run_toESP32():
 def run_reset_command():
     subprocess.Popen(["python", "/home/pi/Desktop/NTOU_CSE_LAB403/main/modify_decision.py"])
 def run_recording():
-    subprocess.Popen(["python", "/home/pi/Desktop/NTOU_CSE_LAB403/main/recording.py"])
+    subprocess.Popen(["python", "/home/pi/Desktop/NTOU_CSE_LAB403/main/video/recording.py"])
 def stop_program():
     root.destroy()
 
