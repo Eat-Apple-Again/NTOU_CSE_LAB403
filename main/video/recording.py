@@ -31,7 +31,6 @@ def image_save(taskqueue, width, height, fps, frames_per_file):
             # 建立 VideoWriter 物件（以時間命名）
             now = datetime.now()
             date_folder = now.strftime("%Y%m%d")  # 以年月日格式建立資料夾名稱
-            date_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'video')
             if not os.path.exists(date_folder):
                 os.makedirs(date_folder)
 
