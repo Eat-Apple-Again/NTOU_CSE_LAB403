@@ -5,6 +5,7 @@ import numpy as np
 import io
 from io import BytesIO
 from PIL import Image
+import datetime
 
 # 連線MySQL資料庫
 fishDB = mysql.connector.connect(
@@ -22,8 +23,11 @@ def insert_data(id, name, image_path):
     with open(image_path, 'rb') as f:
         img_data = f.read()
 
-    sql = "INSERT INTO frames (id, name, data) VALUES (%s, %s, %s)"
-    val = (id, name, img_data)
+    # 將系統時間格式轉換成 MySQL 的 timestamp 格式
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    sql = "INSERT INTO frames (id, name, data, update_time) VALUES (%s, %s, %s, %s)"
+    val = (id, name, img_data, current_time)
     mycursor.execute(sql, val)
     fishDB.commit()
 
