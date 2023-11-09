@@ -53,7 +53,6 @@ if __name__ == '__main__':
   cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
 
   i = 0
-  count = 0
   while(True):
     # 從攝影機擷取一張影像
     ret1, frame1 = cap1.read()
@@ -62,14 +61,13 @@ if __name__ == '__main__':
       frame1 = cv2.resize(frame1,(720,480))
     else:
       break
+    
     if i == 0:
       print(frame1.shape)
       i = 1
     
     # 顯示圖片(720, 480, 3)
     cv2.imshow('monitor', frame1)
-
-    #cv2.imwrite("/home/pi/Desktop/newGCP/kuaikuai01.png", frame1)
 
     # 若按下 q 鍵則離開迴圈
     if cv2.waitKey(1000) & 0xFF == ord('q'):
