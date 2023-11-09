@@ -94,7 +94,7 @@ def rtsp_streaming():
     cap1.release()
 
 if __name__ == '__main__':
-    schedule.every(1).minutes.do(rtsp_streaming)
+    schedule.every(10).minutes.do(rtsp_streaming)
 
     while True:
         schedule.run_pending()
