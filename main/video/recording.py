@@ -46,53 +46,57 @@ def image_save(taskqueue, width, height, fps, frames_per_file):
     writer.release()
 
 def rtsp_streaming():
+    try:
         # 開啟 RTSP 串流
-    cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
+        cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
 
-    # 取得影像的尺寸大小
-    width = int(cap1.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap1.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        # 取得影像的尺寸大小
+        width = int(cap1.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap1.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    # 取得影格率
-    fps = cap1.get(cv2.CAP_PROP_FPS)
+        # 取得影格率
+        fps = cap1.get(cv2.CAP_PROP_FPS)
 
-    # 建立工作佇列
-    taskqueue = Queue()
+        # 建立工作佇列
+        taskqueue = Queue()
 
-    # 計數器
-    frame_counter = 0
+        # 計數器
+        frame_counter = 0
 
-    # 總錄製幀數（20 秒鐘）
-    total_frames = fps * 20
+        # 總錄製幀數（20 秒鐘）
+        total_frames = fps * 20
 
-    # 每個檔案的幀數（10 秒鐘）
-    frames_per_file = fps * 10
+        # 每個檔案的幀數（10 秒鐘）
+        frames_per_file = fps * 10
 
-    # 建立並執行工作行程
-    proc = Process(target=image_save, args=(taskqueue, width, height, fps, frames_per_file))
-    proc.start()
+        # 建立並執行工作行程
+        proc = Process(target=image_save, args=(taskqueue, width, height, fps, frames_per_file))
+        proc.start()
 
-    while frame_counter < total_frames:
-        # 從 RTSP 串流讀取一張影像
-        ret, image = cap1.read()
+        while frame_counter < total_frames:
+            # 從 RTSP 串流讀取一張影像
+            ret, frame = cap1.read()
 
-        if ret:
-            # 將影像放入工作佇列
-            taskqueue.put((image, frame_counter))
-            frame_counter += 1
-        else:
-            # 若沒有影像跳出迴圈
-            break
+            if ret:
+                # 將影像放入工作佇列
+                taskqueue.put((frame, frame_counter))
+                frame_counter += 1
+            else:
+                # 若沒有影像跳出迴圈
+                break
 
-    # 傳入 None 終止工作行程
-    taskqueue.put((None, None))
+        # 傳入 None 終止工作行程
+        taskqueue.put((None, None))
 
-    # 等待工作行程結束
-    proc.join()
+        # 等待工作行程結束
+        proc.join()
 
-    # 釋放資源
-    cap1.release()
-
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        # 釋放資源
+        cap1.release()
+        
 if __name__ == '__main__':
     schedule.every(10).minutes.do(rtsp_streaming)
 
