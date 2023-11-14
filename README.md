@@ -2,10 +2,10 @@
 有兩個資料夾: main和Rpi2Arduino
 
 ## main
-user.py 可以用tkinter介面執行各功能
-monitor.py 用RTSP查看串流的監視器畫面
-upload.py 上傳frame到GCP VM DB
-modify_decision.py 重設GCP VM DB中的decision table
+    user.py 可以用tkinter介面執行各功能
+    monitor.py 用RTSP查看串流的監視器畫面
+    upload.py 上傳frame到GCP VM DB
+    modify_decision.py 重設GCP VM DB中的decision table
 
 ### video
     用來採樣監視器畫面
