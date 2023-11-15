@@ -1,5 +1,5 @@
-# 部屬在養殖現場的Raspberry Pi
-有兩個資料夾: main和Rpi2Arduino
+# 部署在養殖現場的 Raspberry Pi
+有兩個資料夾: main 和 Rpi2Arduino
 
 ## main
     user.py 可以用tkinter介面執行各功能
