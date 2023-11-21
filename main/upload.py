@@ -46,6 +46,19 @@ def select_data(id):
     result = mycursor.fetchone()
     return result
 
+def update_data(id, name, image_path):
+    with open(image_path, 'rb') as f:
+        img_data = f.read()
+
+    # 將系統時間格式轉換成 MySQL 的 timestamp 格式
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    sql = "UPDATE frames SET name = %s, data = %s, update_time = %s WHERE id = %s"
+    val = (name, img_data, current_time, id)
+    mycursor.execute(sql, val)
+    fishDB.commit()
+
+
 if __name__ == '__main__':
   #選擇攝影機
   #參考 https://www.ispyconnect.com/camera/d-link
@@ -61,7 +74,7 @@ if __name__ == '__main__':
       frame1 = cv2.resize(frame1,(720,480))
     else:
       break
-    
+
     if i == 0:
       print(frame1.shape)
       i = 1
@@ -76,9 +89,12 @@ if __name__ == '__main__':
       cv2.imwrite("/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png", frame1)
       id = 1
       image_path = '/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png'
+      # 刪除資料
       delete_data(id)
       # 新增資料
       insert_data(id, 'picture01', image_path)
+      # 更新資料
+      update_data(id, 'picture01', image_path)
 
   # 查詢資料
   result = select_data(id)
