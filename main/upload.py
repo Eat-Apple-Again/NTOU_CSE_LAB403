@@ -33,7 +33,7 @@ def insert_data(id, name, image_path):
 
 # 刪除資料
 def delete_data(id):
-    sql = "DELETE from frames WHERE id = %s"
+    sql = "DELETE FROM frames WHERE id = %s"
     val = (id,)
     mycursor.execute(sql, val)
     fishDB.commit()
@@ -90,9 +90,9 @@ if __name__ == '__main__':
       id = 1
       image_path = '/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png'
       # 刪除資料
-      delete_data(id)
+      #delete_data(id)
       # 新增資料
-      insert_data(id, 'picture01', image_path)
+      #insert_data(id, 'picture01', image_path)
       # 更新資料
       update_data(id, 'picture01', image_path)
 
