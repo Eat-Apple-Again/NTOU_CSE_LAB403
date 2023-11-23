@@ -27,7 +27,7 @@
 
 ## 更新github最新的repository
     在cmd下指令
-    ```python
+    ```bash
         git fetch
         git reset  --hard origin/main
     ```
