@@ -23,3 +23,11 @@
     電機系使用參數: Baud rate = 115200  
 
     fetch_to_arduino.py 從GCP VM DB 拿投餌指令並傳遞給ESP32  
+
+
+## 更新github最新的repository
+    在cmd下指令
+    ```
+        git fetch
+        git reset  --hard origin/main
+    ```
