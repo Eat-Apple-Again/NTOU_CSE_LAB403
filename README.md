@@ -28,6 +28,6 @@
 ## 更新github最新的repository
     在cmd下指令
     ```bash
-        git fetch
-        git reset  --hard origin/main
+    git fetch
+    git reset  --hard origin/main
     ```
