@@ -83,7 +83,7 @@ if __name__ == '__main__':
     cv2.imshow('monitor', frame1)
 
     # 若按下 q 鍵則離開迴圈
-    if cv2.waitKey(1000) & 0xFF == ord('q'):
+    if cv2.waitKey(10000) & 0xFF == ord('q'):
       break
     else:
       cv2.imwrite("/home/pi/Desktop/NTOU_CSE_LAB403/main/upload_frames/upload.png", frame1)
