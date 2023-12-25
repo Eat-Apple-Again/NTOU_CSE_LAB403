@@ -1,7 +1,9 @@
 import cv2
 
-#JUST STREAMING
-#參考 https://www.ispyconnect.com/camera/d-link
+# JUST STREAMING
+# 參考 https://www.ispyconnect.com/camera/d-link
+#cap1 = cv2.VideoCapture('rtsp://admin:451466@192.168.1.51/live/profile.0') # 印表機
+# cap1 = cv2.VideoCapture('rtsp://admin:227182@192.168.1.21/live/profile.0') # 冷氣
 cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
 cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
 
