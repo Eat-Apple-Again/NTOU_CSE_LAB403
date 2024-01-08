@@ -2,33 +2,33 @@ import cv2
 import os
 from datetime import datetime
 
-# 設定影像大小
+# Resolution
 frame_width = 720
 frame_height = 480
 
 def save_image(frame):
-    # 取得當前日期
+    # 取得今天日期
     current_date = datetime.now().strftime("frames-%Y%m%d")
 
-    # 檢查當前日期的資料夾是否存在，若不存在則創建
+    # 檢查今天日期的資料夾是否存在，若不存在就新建一個
     current_dir = os.path.join("", current_date)
     os.makedirs(current_dir, exist_ok=True)
 
-    # 以當前日期為檔名儲存當前幀
-    frame_filename = os.path.join(current_dir, f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.jpg")
-    cv2.imwrite(frame_filename, frame)
-    print(f"影像已儲存至 {frame_filename}")
+    # 以今天日期為檔名儲存當前frame
+    frame_filename = os.path.join(current_dir, f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.png")
+    cv2.imwrite(frame_filename, frame, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+    print(f"影像已儲存: -> {frame_filename}")
 
 while True:
     try:
         # 建立RTSP串流
-        cap = cv2.VideoCapture('rtsp://Admin:1234@192.168.50.251/cam0/h264')
+        cap = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
+
         # 檢查是否成功連接
         if not cap.isOpened():
-            raise Exception("Cannot connect to Camera~")
+            raise Exception("Cannot connect to Camera ~")
         
-
         # 從攝影機擷取一張影像
         ret, frame = cap.read()
         if not ret:
@@ -42,7 +42,7 @@ while True:
         save_image(frame)
 
     except Exception as e:
-        print(f"錯誤發生：{e}")
+        print(f"發生錯誤：{e}")
     finally:
         # 釋放資源
         cap.release()
