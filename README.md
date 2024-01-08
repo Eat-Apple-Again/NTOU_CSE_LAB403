@@ -1,5 +1,5 @@
 # 部署在養殖現場的 Raspberry Pi
-有兩個資料夾: main 和 Rpi2Arduino
+有兩個資料夾: main 和 RPi2Arduino
 
 ## main
     user.py 可以用tkinter介面執行各功能  
@@ -18,7 +18,7 @@
     save_mp4.py 儲存影像(馬上儲存10秒鐘的影像)
     ticktack.py 每隔10分鐘執行一次save_mp4.py
 
-## Rpi2Arduino
+## RPi2Arduino
     用來和投餌機的ESP32進行序列埠通訊  
     電機系使用參數: Baud rate = 115200  
 
