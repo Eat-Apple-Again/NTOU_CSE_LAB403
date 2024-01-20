@@ -6,13 +6,19 @@ import io
 from io import BytesIO
 from PIL import Image
 import datetime
+import json
+
+with open('config.json', 'r') as config_file:
+    config_data = json.load(config_file)
+camera_config = config_data['camera_config']
+db_config = config_data['GCP_VM_DB']
 
 # 連線MySQL資料庫
 fishDB = mysql.connector.connect(
-  host="",
-  user="",
-  password="",
-  database=""
+  host=db_config['host'],
+  user=db_config['user'],
+  password=db_config['password'],
+  database=db_config['database']
 )
 
 # 創建cursor物件
@@ -62,13 +68,12 @@ def update_data(id, name, image_path):
 if __name__ == '__main__':
   #選擇攝影機
   #參考 https://www.ispyconnect.com/camera/d-link
-  cap1 = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
-  cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
+  cap = cv2.VideoCapture(camera_config['dynacolor02'])
 
   i = 0
   while(True):
     # 從攝影機擷取一張影像
-    ret1, frame1 = cap1.read()
+    ret1, frame1 = cap.read()
     #resize to 720*480
     if ret1:
       frame1 = cv2.resize(frame1,(720,480))
@@ -106,7 +111,6 @@ if __name__ == '__main__':
   # 關閉資料庫連線
   fishDB.close()
   # 釋放攝影機
-  cap1.release()
-  #cap2.release()
+  cap.release()
   # 關閉所有 OpenCV 視窗
   cv2.destroyAllWindows()
