@@ -1,0 +1,16 @@
+{
+
+    "fishDB": {
+        "host": "",
+        "user": "",
+        "password": "",
+        "database": ""
+      },
+
+      "camera_config": {
+        "d_link01": "rtsp://admin:451466@192.168.1.51/live/profile.0",
+        "d_link02": "rtsp://admin:227182@192.168.1.21/live/profile.0",
+        "local": "rtsp://Admin:1234@192.168.7.21/cam0/h264"
+      }
+)
+}
