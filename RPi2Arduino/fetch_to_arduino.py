@@ -3,14 +3,20 @@ import mysql.connector
 from datetime import datetime
 import time
 import os
+import json
 
-# DB config
-db_config = {
-    'host': '',
-    'user': '',
-    'password': '',
-    'database': ''
-}
+with open('config.json', 'r') as config_file:
+    config_data = json.load(config_file)
+db_config = config_data['GCP_VM_DB']
+
+# 連線MySQL資料庫
+fishDB = mysql.connector.connect(
+  host=db_config['host'],
+  user=db_config['user'],
+  password=db_config['password'],
+  database=db_config['database']
+)
+
 # 建立和Arduino的實體序列埠通訊
 #ser = serial.Serial('COM3', 9600) # Windows 用COMX
 #ser = serial.Serial('/dev/ttyACM0', 9600) # Linux 用/dev/ttyACMX
