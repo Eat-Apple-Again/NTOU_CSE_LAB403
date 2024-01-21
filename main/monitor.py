@@ -1,45 +1,50 @@
 import cv2
 import json
+import tkinter as tk
+from PIL import Image, ImageTk
 
-# JUST STREAMING
-# 參考 https://www.ispyconnect.com/camera/d-link
-# cap = cv2.VideoCapture('rtsp://admin:451466@192.168.1.51/live/profile.0') # 印表機
-# cap = cv2.VideoCapture('rtsp://admin:227182@192.168.1.21/live/profile.0') # 冷氣
-# cap = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264') # 現場Dynacolor
+def on_closing():
+    root.destroy()
+
+def update_frame():
+    ret, frame = cap.read()
+    if ret:
+        frame = cv2.resize(frame, (720, 480))
+
+        # fromarray轉成PIL；PhotoImage轉成tkinter可以顯示的格式
+        photo = ImageTk.PhotoImage(image=Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))
+        canvas.create_image(0, 0, anchor=tk.NW, image=photo)
+        canvas.image = photo
+
+        root.after(10, lambda: update_frame)
+    else:
+        on_closing()
 
 with open('config.json', 'r') as config_file:
     config_data = json.load(config_file)
 camera_config = config_data['camera_config']
 
-# 建立RTSP連線
+# 建立 RTSP 連線
 cap = cv2.VideoCapture(camera_config['dynacolor02'])
 
-i = 0
-while(True):
-  # 從攝影機擷取一張影像
-  ret1, frame1 = cap.read()
+####################
+# tkinter
+root = tk.Tk()
+root.title("Monitor")
 
-  #resize to 720*480
-  if ret1:
-    frame1 = cv2.resize(frame1,(720,480))
-  else:
-    break
+canvas = tk.Canvas(root, width=720, height=480)
+canvas.pack()
 
-  if i == 0:
-    print(frame1.shape)
-    i = 1
-  
-  # 顯示圖片(720, 480, 3)
-  cv2.imshow('monitor', frame1)
+# 結束按鈕
+close_button = tk.Button(root, text="結束", command=on_closing)
+close_button.pack()
 
+# 定期更新畫面
+update_frame()
 
-  # 若按下 q 鍵則離開迴圈
-  if cv2.waitKey(100) & 0xFF == ord('q'):
-    break
-
+# 關閉視窗的時候也執行 on_closing()
+root.protocol("WM_DELETE_WINDOW", on_closing)
+root.mainloop()
 
 # 釋放攝影機
 cap.release()
-
-# 關閉所有 OpenCV 視窗
-cv2.destroyAllWindows()
