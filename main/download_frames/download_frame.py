@@ -53,7 +53,8 @@ def select_data(id):
 def download_frames(count):
     id = 1
 
-    image_path = 'C://11157065//lab//yunlin//newGCP//download_frames//ar1//test' + str(count) + ".png"
+    image_path = '/home/pi/Desktop/NTOU_CSE_LAB403/main/download_frames/' + str(count) + ".png"
+    # image_path = 'C://11157065//lab//yunlin//newGCP//download_frames//ar1//test' + str(count) + ".png"
     duration = 3
     start_time = time.time()
 
