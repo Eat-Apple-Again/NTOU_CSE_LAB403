@@ -53,7 +53,8 @@ def record():
     save_image(frame)
 
 if __name__ == "__main__":
-    schedule.every(10).seconds.do(record)
+    # 每天的凌晨4點到晚上7點間，每隔10秒鐘儲存當下的一個frame
+    schedule.every().day.at("04:00").to("19:00").every(10).seconds.do(record)
     while True:
         schedule.run_pending()
 
