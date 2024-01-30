@@ -1,6 +1,7 @@
 import cv2
 import os
 from datetime import datetime
+import schedule
 
 # Resolution
 frame_width = 720
@@ -17,9 +18,9 @@ def save_image(frame):
     # 以今天日期為檔名儲存當前frame
     frame_filename = os.path.join(current_dir, f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.png")
     cv2.imwrite(frame_filename, frame, [cv2.IMWRITE_PNG_COMPRESSION, 0])
-    print(f"影像已儲存: -> {frame_filename}")
+    print(f"👍 影像已儲存: -> {frame_filename}")
 
-while True:
+def rtsp_connect():
     try:
         # 建立RTSP串流
         cap = cv2.VideoCapture('rtsp://Admin:1234@192.168.7.21/cam0/h264')
@@ -27,26 +28,35 @@ while True:
 
         # 檢查是否成功連接
         if not cap.isOpened():
-            raise Exception("Cannot connect to Camera ~")
+            raise Exception("Cannot connect to Camera ~ ")
         
         # 從攝影機擷取一張影像
         ret, frame = cap.read()
         if not ret:
-            raise Exception("Cannot read frames")
+            raise Exception("Cannot read frames😢")
         frame = cv2.resize(frame, (frame_width, frame_height))
         
         # 顯示影像
         # cv2.imshow('monitor', frame)
-        
-        # 儲存影像
-        save_image(frame)
-
     except Exception as e:
         print(f"發生錯誤：{e}")
     finally:
         # 釋放資源
         cap.release()
         cv2.destroyAllWindows()
+    return frame
+
+def record():
+    # 建立 RTSP 連線
+    frame = rtsp_connect()
+    # 儲存影像
+    save_image(frame)
+
+if __name__ == "__main__":
+    schedule.every(10).seconds.do(record)
+    while True:
+        schedule.run_pending()
+
 
 ''' 備用連結
 # 格式參考 https://www.ispyconnect.com/camera/d-link
