@@ -1,7 +1,6 @@
 import cv2
 import os
 from datetime import datetime
-import schedule
 
 # Resolution
 frame_width = 720
@@ -38,13 +37,14 @@ def rtsp_connect():
         
         # 顯示影像
         # cv2.imshow('monitor', frame)
+
+        return frame
     except Exception as e:
         print(f"發生錯誤：{e}")
     finally:
         # 釋放資源
         cap.release()
         cv2.destroyAllWindows()
-    return frame
 
 def record():
     # 建立 RTSP 連線
@@ -53,11 +53,20 @@ def record():
     save_image(frame)
 
 if __name__ == "__main__":
+    # 由 cron table 定時執行
+    record()
+    print(f"執行時間: {datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}")
+
+    """ cron table
+    sudo crontable -e
+    */10 4-19 * * * /usr/bin/python3 /home/pi/Desktop/NTOU_CSE_LAB403/main/video/recording_perSecond.py
+    """
+    """
     # 每天的凌晨4點到晚上7點間，每隔10秒鐘儲存當下的一個frame
     schedule.every().day.at("04:00").to("19:00").every(10).seconds.do(record)
     while True:
         schedule.run_pending()
-
+    """
 
 ''' 備用連結
 # 格式參考 https://www.ispyconnect.com/camera/d-link
