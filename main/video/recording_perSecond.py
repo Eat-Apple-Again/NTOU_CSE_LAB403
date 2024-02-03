@@ -1,6 +1,7 @@
 import cv2
 import os
 from datetime import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 # Resolution
 frame_width = 720
@@ -53,13 +54,28 @@ def record():
     save_image(frame)
 
 if __name__ == "__main__":
-    # 由 cron table 定時執行
-    record()
-    print(f"執行時間: {datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}")
+    # 創建一個 BlockingScheduler 物件
+    scheduler = BlockingScheduler()
 
+    # 定義一個工作，在每天的 3:00 到 19:59 之間，每隔 10 秒執行一次 record 函數
+    scheduler.add_job(record, 'cron', hour='3-20', second='*/10')
+
+    # 開始排程
+    try:
+        print('Start Recording-----------')
+        scheduler.start()
+    except (KeyboardInterrupt, SystemExit):
+        # 如果收到 KeyboardInterrupt 或 SystemExit 信號，停止排程
+        scheduler.shutdown()
+        print('Interrupt-----------')
+    
     """ cron table
+    python版本
     sudo crontable -e
     */10 4-19 * * * /usr/bin/python3 /home/pi/Desktop/NTOU_CSE_LAB403/main/video/recording_perSecond.py
+    shell版本
+    每天凌晨3點執行一次
+    0 3 * * * /home/pi/Desktop/NTOU_CSE_LAB403/main/video/record.sh >> /home/pi/logfile.log 2>&1
     """
     """
     # 每天的凌晨4點到晚上7點間，每隔10秒鐘儲存當下的一個frame
