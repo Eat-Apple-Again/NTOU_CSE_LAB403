@@ -25,7 +25,7 @@ with open('config.json', 'r') as config_file:
 camera_config = config_data['camera_config']
 
 # 建立 RTSP 連線
-cap = cv2.VideoCapture(camera_config['dynacolor02'])
+cap = cv2.VideoCapture(camera_config['local'])
 
 ####################
 # tkinter
