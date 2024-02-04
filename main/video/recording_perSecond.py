@@ -15,7 +15,7 @@ def save_image(frame):
     current_dir = os.path.join("", current_date)
     os.makedirs(current_dir, exist_ok=True)
 
-    # 以今天日期為檔名儲存當前frame
+    # 以當下時間為檔名儲存當前 frame
     frame_filename = os.path.join(current_dir, f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.png")
     cv2.imwrite(frame_filename, frame, [cv2.IMWRITE_PNG_COMPRESSION, 0])
     print(f"👍 影像已儲存: -> {frame_filename}")
@@ -54,13 +54,13 @@ def record():
     save_image(frame)
 
 if __name__ == "__main__":
-    # 創建一個 BlockingScheduler 物件
+    # 建立一個 BlockingScheduler 物件
     scheduler = BlockingScheduler()
 
     # 定義一個工作，在每天的 3:00 到 19:59 之間，每隔 10 秒執行一次 record 函數
-    scheduler.add_job(record, 'cron', hour='3-20', second='*/10')
+    scheduler.add_job(record, 'cron', hour='3-19', second='*/10')
 
-    # 開始排程
+    # 開始
     try:
         print('Start Recording-----------')
         scheduler.start()
